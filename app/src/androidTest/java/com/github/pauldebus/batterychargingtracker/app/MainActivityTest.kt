@@ -1,4 +1,4 @@
-package com.ncorti.kotlin.template.app
+package com.github.pauldebus.batterychargingtracker.app
 
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
