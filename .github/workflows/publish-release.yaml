@@ -30,12 +30,12 @@ jobs:
           echo "storeFile=signing.jks" >> signing.properties
           echo "storePassword=${{ secrets.SIGNING_KEY_STORE_PASSWORD }}" >> signing.properties
           echo "keyAlias=${{ secrets.SIGNING_KEY_ALIAS }}" >> signing.properties
-          # echo "keyPassword=${{ secrets.SIGNING_KEY_PASSWORD }}" >> signing.properties
+          echo "keyPassword=${{ secrets.SIGNING_KEY_STORE_PASSWORD }}" >> signing.properties
 
 
       - name: Decode Keystore
         run: |
-          echo "${{ secrets.SIGNING_KEY_STORE_BASE64 }}" | base64 --decode > signing.jks
+          echo "${{ secrets.SIGNING_KEY_STORE_BASE64 }}" | base64 --decode > keystore.jks
 
       - name: Build Signed Release APK
         run: ./gradlew assembleRelease
