@@ -1,3 +1,5 @@
+package com.pauldebus.batterytracker
+
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -7,6 +9,8 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
+
+import com.pauldebus.batterytracker.R
 
 class ChargingEventAdapter : RecyclerView.Adapter<ChargingEventAdapter.ViewHolder>() {
     private var events = listOf<ChargingEvent>()

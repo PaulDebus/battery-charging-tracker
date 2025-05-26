@@ -23,8 +23,9 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
 import java.util.*
-import com.pauldebus.batterytracker.database.ChargingDatabase
-import com.pauldebus.batterytracker.database.ChargingEvent
+import com.pauldebus.batterytracker.ChargingDatabase
+import com.pauldebus.batterytracker.ChargingEventAdapter
+import com.pauldebus.batterytracker.ChargingEventDao
 
 class MainActivity : AppCompatActivity() {
     private lateinit var database: ChargingDatabase

@@ -1,3 +1,5 @@
+package com.pauldebus.batterytracker
+
 import androidx.room.*
 import kotlinx.coroutines.flow.Flow
 
@@ -26,7 +28,7 @@ interface ChargingEventDao {
     suspend fun updateEvent(event: ChargingEvent)
 }
 
-@Database(entities = [ChargingEvent::class], version = 1)
+@Database(entities = [ChargingEvent::class], version = 1, exportSchema = false)
 abstract class ChargingDatabase : RoomDatabase() {
     abstract fun chargingEventDao(): ChargingEventDao
 }
