@@ -1,8 +1,13 @@
+import java.io.FileInputStream
+import java.util.Properties
+
 plugins {
     id("com.android.application")
     kotlin("android")
     id("com.google.devtools.ksp")
 }
+
+
 
 android {
     compileSdk = libs.versions.compile.sdk.version.get().toInt()
@@ -27,11 +32,21 @@ android {
         jvmTarget = JavaVersion.VERSION_17.toString()
     }
     signingConfigs {
+       
         create("release") {
-            storeFile = file("../signing.jks")
-            storePassword = System.getenv("SIGNING_KEY_STORE_PASSWORD")
-            keyAlias = System.getenv("SIGNING_KEY_ALIAS")
-            // keyPassword System.getenv("SIGNING_KEY_PASSWORD")
+            val signingProperties = Properties()
+            val signingPropertiesFile = rootProject.file("signing.properties") // Place signing.properties in project root
+            if (signingPropertiesFile.exists()) {
+                signingPropertiesFile.inputStream().use { stream ->
+                    signingProperties.load(stream)
+                }
+                storeFile = file(signingProperties.getProperty("storeFile") ?: "keystore.jks")
+                storePassword = signingProperties.getProperty("storePassword")
+                keyAlias = signingProperties.getProperty("keyAlias")
+                keyPassword = signingProperties.getProperty("keyPassword")
+            } else {
+                throw GradleException("signing.properties not found! Please provide a signing.properties file in the project root." + rootProject.projectDir)
+            }
         }
     }
     buildTypes {

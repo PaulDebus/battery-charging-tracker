@@ -27,11 +27,10 @@ jobs:
 
       - name: Create signing.properties
         run: |
-          echo "storeFile=../signing.jks" >> signing.properties
+          echo "storeFile=signing.jks" >> signing.properties
           echo "storePassword=${{ secrets.SIGNING_KEY_STORE_PASSWORD }}" >> signing.properties
           echo "keyAlias=${{ secrets.SIGNING_KEY_ALIAS }}" >> signing.properties
-          echo "keyPassword=${{ secrets.SIGNING_KEY_PASSWORD }}" >> signing.properties
-        working-directory: ./app # Adjust if your module is not named 'app'
+          # echo "keyPassword=${{ secrets.SIGNING_KEY_PASSWORD }}" >> signing.properties
 
 
       - name: Decode Keystore
