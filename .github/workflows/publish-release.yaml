@@ -27,7 +27,7 @@ jobs:
 
       - name: Create signing.properties
         run: |
-          echo "storeFile=signing.jks" >> signing.properties
+          echo "storeFile=keystore.jks" >> signing.properties
           echo "storePassword=${{ secrets.SIGNING_KEY_STORE_PASSWORD }}" >> signing.properties
           echo "keyAlias=${{ secrets.SIGNING_KEY_ALIAS }}" >> signing.properties
           echo "keyPassword=${{ secrets.SIGNING_KEY_STORE_PASSWORD }}" >> signing.properties
