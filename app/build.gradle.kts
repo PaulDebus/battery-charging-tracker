@@ -27,10 +27,10 @@ android {
         jvmTarget = JavaVersion.VERSION_17.toString()
     }
     signingConfigs {
-        release {
-            storeFile file("../signing.jks")
-            storePassword System.getenv("SIGNING_KEY_STORE_PASSWORD")
-            keyAlias System.getenv("SIGNING_KEY_ALIAS")
+        create("release") {
+            storeFile = file("../signing.jks")
+            storePassword = System.getenv("SIGNING_KEY_STORE_PASSWORD")
+            keyAlias = System.getenv("SIGNING_KEY_ALIAS")
             // keyPassword System.getenv("SIGNING_KEY_PASSWORD")
         }
     }
