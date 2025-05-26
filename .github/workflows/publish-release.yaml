@@ -1,4 +1,4 @@
-name: Publish Release
+name: Build & Publish APK
 on:
   push:
     tags:
@@ -6,9 +6,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  publish:
-    # remove this check when your secrets are setup and you're ready to publish
-    if: ${{ github.repository == 'cortinico/kotlin-android-template'}}
+  build:
     runs-on: [ubuntu-latest]
     env:
       GRADLE_OPTS: -Dorg.gradle.parallel=false
@@ -27,22 +25,11 @@ jobs:
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v3
 
-      - name: Publish to Maven Local
-        run: ./gradlew publishToMavenLocal
-        env:
-          ORG_GRADLE_PROJECT_SIGNING_KEY: ${{ secrets.ORG_GRADLE_PROJECT_SIGNING_KEY }}
-          ORG_GRADLE_PROJECT_SIGNING_PWD: ${{ secrets.ORG_GRADLE_PROJECT_SIGNING_PWD }}
+      - name: Build APK
+        run: ./gradlew assembleRelease
 
-      - name: Upload Build Artifacts
+      - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: 'release-artifacts'
-          path: '~/.m2/repository/'
-
-      - name: Publish to the Snapshot Repository
-        run: ./gradlew publishReleasePublicationToNexusRepository
-        env:
-          ORG_GRADLE_PROJECT_SIGNING_KEY: ${{ secrets.ORG_GRADLE_PROJECT_SIGNING_KEY }}
-          ORG_GRADLE_PROJECT_SIGNING_PWD: ${{ secrets.ORG_GRADLE_PROJECT_SIGNING_PWD }}
-          ORG_GRADLE_PROJECT_NEXUS_USERNAME: ${{ secrets.ORG_GRADLE_PROJECT_NEXUS_USERNAME }}
-          ORG_GRADLE_PROJECT_NEXUS_PASSWORD: ${{ secrets.ORG_GRADLE_PROJECT_NEXUS_PASSWORD }}
+          name: app-release-apk
+          path: '**/build/outputs/apk/release/*.apk'
