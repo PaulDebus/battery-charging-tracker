@@ -34,27 +34,35 @@ android {
     signingConfigs {
        
         create("release") {
-            val signingProperties = Properties()
-            val signingPropertiesFile = rootProject.file("signing.properties") // Place signing.properties in project root
-            if (signingPropertiesFile.exists()) {
-                signingPropertiesFile.inputStream().use { stream ->
-                    signingProperties.load(stream)
+            if (gradle.startParameter.taskNames.any { it.contains("Release", ignoreCase = true) }) {
+                val signingProperties = Properties()
+                val signingPropertiesFile = rootProject.file("signing.properties") // Place signing.properties in project root
+                if (signingPropertiesFile.exists()) {
+                    signingPropertiesFile.inputStream().use { stream ->
+                        signingProperties.load(stream)
+                    }
+                    storeFile = file(signingProperties.getProperty("storeFile") ?: "keystore.jks")
+                    storePassword = signingProperties.getProperty("storePassword")
+                    keyAlias = signingProperties.getProperty("keyAlias")
+                    keyPassword = signingProperties.getProperty("keyPassword")
+                } else {
+                    throw GradleException("signing.properties not found! Please provide a signing.properties file in the project root." + rootProject.projectDir)
                 }
-                storeFile = file(signingProperties.getProperty("storeFile") ?: "keystore.jks")
-                storePassword = signingProperties.getProperty("storePassword")
-                keyAlias = signingProperties.getProperty("keyAlias")
-                keyPassword = signingProperties.getProperty("keyPassword")
-            } else {
-                throw GradleException("signing.properties not found! Please provide a signing.properties file in the project root." + rootProject.projectDir)
             }
         }
     }
     buildTypes {
+        getByName("debug") {
+            // No signing config needed for debug, uses default debug keystore
+            isMinifyEnabled = false
+            applicationIdSuffix = ".debug"
+            versionNameSuffix = "-debug"
+        }
         getByName("release") {
             isMinifyEnabled = false
             proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+            getDefaultProguardFile("proguard-android-optimize.txt"),
+            "proguard-rules.pro"
             )
             signingConfig = signingConfigs.getByName("release")
         }
