@@ -1,3 +1,6 @@
+import androidx.room.*
+import kotlinx.coroutines.flow.Flow
+
 @Entity(tableName = "charging_events")
 data class ChargingEvent(
     @PrimaryKey(autoGenerate = true)

@@ -1,3 +1,13 @@
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Date
+import java.util.Locale
+
 class ChargingEventAdapter : RecyclerView.Adapter<ChargingEventAdapter.ViewHolder>() {
     private var events = listOf<ChargingEvent>()
     private val dateFormat = SimpleDateFormat("MMM dd, yyyy", Locale.getDefault())
