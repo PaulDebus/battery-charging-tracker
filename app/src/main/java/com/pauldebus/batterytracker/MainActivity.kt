@@ -1,4 +1,4 @@
-package com.example.batterytracker
+package com.pauldebus.batterytracker
 
 import android.content.Intent
 import android.content.IntentFilter
@@ -23,6 +23,8 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
 import java.util.*
+import com.pauldebus.batterytracker.database.ChargingDatabase
+import com.pauldebus.batterytracker.database.ChargingEvent
 
 class MainActivity : AppCompatActivity() {
     private lateinit var database: ChargingDatabase
